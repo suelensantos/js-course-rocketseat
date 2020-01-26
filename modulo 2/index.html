@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Curso Javascript</title>
+  </head>
+  <body>
+    <div id="app">
+      <button class="botao">Clique no botão</button>
+    </div>
+
+    <script>
+      // Módulo 2 - 1º e 2º exercício (Criar botão e ao clicar, um novo elemento em tela 
+      // com a forma de um quadrado vermelho aparece. Em seguida, toda vez que o usuário passar
+      // o mouse por cima de algum quadrado, trocar a sua cor por outra gerada aleatoriamente.)
+
+      var btnElement = document.querySelector('button.botao');
+
+      function getRandomColor() {
+        var letters = "0123456789ABCDEF";
+        var color = "#";
+        for(var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      function changeBoxColor(data) {
+        data.style.backgroundColor = getRandomColor();
+      }
+
+      btnElement.onclick = function() {
+        var boxElement = document.createElement('div');
+        boxElement.setAttribute('class', 'box');
+        boxElement.setAttribute('onmouseover', 'changeBoxColor(this)');
+
+        boxElement.style.width = 100;
+        boxElement.style.height = 100;
+        boxElement.style.backgroundColor = '#f00';
+
+        var containerElement = document.querySelector('#app');
+        containerElement.appendChild(boxElement);
+      }
+
+      /////////////////////////////////////////////////////////////////////////
+
+      // Módulo 2 - 3º e 4º exercício (Criar Lista e ao clicar no botão adicionar, acrescentar novo nome do input na lista.)
+      var containerListElement = document.querySelector('#app');
+
+      // Adiciona Tag List (<ul> com <li>)
+      var nomes = ["Diego", "Gabriel", "Lucas"];
+      var createListElement = document.createElement('ul');
+
+      for(let i = 0; i < nomes.length; i++) {
+        const nome = nomes[i];
+
+        var listElement = document.createElement('li');
+        createListElement.appendChild(listElement);
+
+        var textListElement = document.createTextNode(nome);
+        listElement.appendChild(textListElement);
+      }
+
+      containerListElement.appendChild(createListElement);
+
+      /////////////////////////////////////////////////////////////////////////
+
+      // Adiciona Tag Input
+      var inputElement = document.createElement('input');
+      inputElement.setAttribute('type', 'text');
+      inputElement.setAttribute('name', 'nome');
+      containerListElement.appendChild(inputElement);
+
+      // Adiciona Tag Button
+      var buttonInputElement = document.createElement('button');
+      buttonInputElement.setAttribute('onclick', 'adicionar()');
+      
+      var buttonListTextElement = document.createTextNode('Adicionar');
+      buttonInputElement.appendChild(buttonListTextElement);
+      containerListElement.appendChild(buttonInputElement);
+
+      // Função adicionar(), para disparar um novo item a lista de nomes com base no input. O conteúdo do
+      // input deve ser apagado após o clique.
+      function adicionar() {
+        var nameInputElement = document.querySelector('input[name=nome]');
+
+        // adiciona text na lista
+        var getListElement = document.querySelector('ul');
+        var listElement = document.createElement('li');
+
+        var text = document.createTextNode(nameInputElement.value);
+        listElement.appendChild(text);
+
+        getListElement.appendChild(listElement);
+
+        // apaga text do input
+        nameInputElement.value = "";
+      }
+    </script>
+  </body>
+</html>
